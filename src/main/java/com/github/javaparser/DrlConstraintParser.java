@@ -21,15 +21,11 @@
 
 package com.github.javaparser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.PackageDeclaration;
@@ -44,7 +40,6 @@ import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.javadoc.Javadoc;
 
 import static com.github.javaparser.ParseStart.CLASS_OR_INTERFACE_TYPE;
-import static com.github.javaparser.ParseStart.COMPILATION_UNIT;
 import static com.github.javaparser.ParseStart.EXPLICIT_CONSTRUCTOR_INVOCATION_STMT;
 import static com.github.javaparser.ParseStart.EXPRESSION;
 import static com.github.javaparser.ParseStart.IMPORT_DECLARATION;
@@ -170,153 +165,97 @@ public final class DrlConstraintParser {
 
     /**
      * Parses the Java code contained in the {@link InputStream} and returns a
-     * {@link CompilationUnit} that represents it.
+     * {@link Expression} that represents it.
      *
      * @param in {@link InputStream} containing Java source code. It will be closed after parsing.
      * @param encoding encoding of the source code
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      */
-    public static CompilationUnit parse(final InputStream in, Charset encoding) {
-        return simplifiedParse(COMPILATION_UNIT, provider(in, encoding));
+    public static Expression parse(final InputStream in, Charset encoding) {
+        return simplifiedParse(EXPRESSION, provider(in, encoding));
     }
 
     /**
      * Parses the Java code contained in the {@link InputStream} and returns a
-     * {@link CompilationUnit} that represents it.<br>
+     * {@link Expression} that represents it.<br>
      * Note: Uses UTF-8 encoding
      *
      * @param in {@link InputStream} containing Java source code. It will be closed after parsing.
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      */
-    public static CompilationUnit parse(final InputStream in) {
+    public static Expression parse(final InputStream in) {
         return parse(in, UTF8);
     }
 
     /**
-     * Parses the Java code contained in a {@link File} and returns a
-     * {@link CompilationUnit} that represents it.
-     *
-     * @param file {@link File} containing Java source code. It will be closed after parsing.
-     * @param encoding encoding of the source code
-     * @return CompilationUnit representing the Java source code
-     * @throws ParseProblemException if the source code has parser errors
-     * @throws FileNotFoundException the file was not found
-     */
-    public static CompilationUnit parse(final File file, final Charset encoding) throws FileNotFoundException {
-        return simplifiedParse(COMPILATION_UNIT, provider(file, encoding)).setStorage(file.toPath());
-    }
-
-    /**
-     * Parses the Java code contained in a {@link File} and returns a
-     * {@link CompilationUnit} that represents it.<br>
-     * Note: Uses UTF-8 encoding
-     *
-     * @param file {@link File} containing Java source code. It will be closed after parsing.
-     * @return CompilationUnit representing the Java source code
-     * @throws ParseProblemException if the source code has parser errors
-     * @throws FileNotFoundException the file was not found
-     */
-    public static CompilationUnit parse(final File file) throws FileNotFoundException {
-        return simplifiedParse(COMPILATION_UNIT, provider(file)).setStorage(file.toPath());
-    }
-
-    /**
-     * Parses the Java code contained in a file and returns a
-     * {@link CompilationUnit} that represents it.
-     *
-     * @param path path to a file containing Java source code
-     * @param encoding encoding of the source code
-     * @return CompilationUnit representing the Java source code
-     * @throws IOException the path could not be accessed
-     * @throws ParseProblemException if the source code has parser errors
-     */
-    public static CompilationUnit parse(final Path path, final Charset encoding) throws IOException {
-        return simplifiedParse(COMPILATION_UNIT, provider(path, encoding)).setStorage(path);
-    }
-
-    /**
-     * Parses the Java code contained in a file and returns a
-     * {@link CompilationUnit} that represents it.<br>
-     * Note: Uses UTF-8 encoding
-     *
-     * @param path path to a file containing Java source code
-     * @return CompilationUnit representing the Java source code
-     * @throws ParseProblemException if the source code has parser errors
-     * @throws IOException the path could not be accessed
-     */
-    public static CompilationUnit parse(final Path path) throws IOException {
-        return simplifiedParse(COMPILATION_UNIT, provider(path)).setStorage(path);
-    }
-
-    /**
      * Parses the Java code contained in a resource and returns a
-     * {@link CompilationUnit} that represents it.<br>
+     * {@link Expression} that represents it.<br>
      * Note: Uses UTF-8 encoding
      *
      * @param path path to a resource containing Java source code. As resource is accessed through a class loader, a
      * leading "/" is not allowed in pathToResource
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      * @throws IOException the path could not be accessed
      */
-    public static CompilationUnit parseResource(final String path) throws IOException {
-        return simplifiedParse(COMPILATION_UNIT, resourceProvider(path));
+    public static Expression parseResource(final String path) throws IOException {
+        return simplifiedParse(EXPRESSION, resourceProvider(path));
     }
 
     /**
      * Parses the Java code contained in a resource and returns a
-     * {@link CompilationUnit} that represents it.<br>
+     * {@link Expression} that represents it.<br>
      *
      * @param path path to a resource containing Java source code. As resource is accessed through a class loader, a
      * leading "/" is not allowed in pathToResource
      * @param encoding encoding of the source code
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      * @throws IOException the path could not be accessed
      */
-    public static CompilationUnit parseResource(final String path, Charset encoding) throws IOException {
-        return simplifiedParse(COMPILATION_UNIT, resourceProvider(path, encoding));
+    public static Expression parseResource(final String path, Charset encoding) throws IOException {
+        return simplifiedParse(EXPRESSION, resourceProvider(path, encoding));
     }
 
     /**
      * Parses the Java code contained in a resource and returns a
-     * {@link CompilationUnit} that represents it.<br>
+     * {@link Expression} that represents it.<br>
      *
      * @param classLoader the classLoader that is asked to load the resource
      * @param path path to a resource containing Java source code. As resource is accessed through a class loader, a
      * leading "/" is not allowed in pathToResource
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      * @throws IOException the path could not be accessed
      */
-    public static CompilationUnit parseResource(final ClassLoader classLoader, final String path, Charset encoding) throws IOException {
-        return simplifiedParse(COMPILATION_UNIT, resourceProvider(classLoader, path, encoding));
+    public static Expression parseResource(final ClassLoader classLoader, final String path, Charset encoding) throws IOException {
+        return simplifiedParse(EXPRESSION, resourceProvider(classLoader, path, encoding));
     }
 
     /**
      * Parses Java code from a Reader and returns a
-     * {@link CompilationUnit} that represents it.<br>
+     * {@link Expression} that represents it.<br>
      *
      * @param reader the reader containing Java source code. It will be closed after parsing.
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      */
-    public static CompilationUnit parse(final Reader reader) {
-        return simplifiedParse(COMPILATION_UNIT, provider(reader));
+    public static Expression parse(final Reader reader) {
+        return simplifiedParse(EXPRESSION, provider(reader));
     }
 
     /**
      * Parses the Java code contained in code and returns a
-     * {@link CompilationUnit} that represents it.
+     * {@link Expression} that represents it.
      *
      * @param code Java source code
-     * @return CompilationUnit representing the Java source code
+     * @return Expression representing the Java source code
      * @throws ParseProblemException if the source code has parser errors
      */
-    public static CompilationUnit parse(String code) {
-        return simplifiedParse(COMPILATION_UNIT, provider(code));
+    public static Expression parse(String code) {
+        return simplifiedParse(EXPRESSION, provider(code));
     }
 
     private static <T extends Node> T simplifiedParse(ParseStart<T> context, Provider provider) {

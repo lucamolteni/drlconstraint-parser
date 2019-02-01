@@ -44,7 +44,6 @@ import com.github.javaparser.ast.type.TypeParameter;
  */
 @FunctionalInterface
 public interface ParseStart<R> {
-    ParseStart<CompilationUnit> COMPILATION_UNIT = GeneratedDrlConstraintParser::CompilationUnit;
     ParseStart<ImportDeclaration> IMPORT_DECLARATION = GeneratedDrlConstraintParser::ImportDeclarationParseStart;
     ParseStart<Expression> EXPRESSION = GeneratedDrlConstraintParser::ExpressionParseStart;
     ParseStart<ClassOrInterfaceType> CLASS_OR_INTERFACE_TYPE = GeneratedDrlConstraintParser::ClassOrInterfaceTypeParseStart;
