@@ -16,25 +16,25 @@
 
 package com.github.javaparser.ast.visitor;
 
-import com.github.javaparser.ast.drlx.OOPathChunk;
-import com.github.javaparser.ast.drlx.OOPathExpr;
-import com.github.javaparser.ast.drlx.RuleBody;
-import com.github.javaparser.ast.drlx.RuleConsequence;
-import com.github.javaparser.ast.drlx.RuleDeclaration;
-import com.github.javaparser.ast.drlx.RulePattern;
-import com.github.javaparser.ast.drlx.expr.CommaSeparatedMethodCallExpr;
-import com.github.javaparser.ast.drlx.expr.DrlxExpression;
-import com.github.javaparser.ast.drlx.expr.HalfBinaryExpr;
-import com.github.javaparser.ast.drlx.expr.HalfPointFreeExpr;
-import com.github.javaparser.ast.drlx.expr.InlineCastExpr;
-import com.github.javaparser.ast.drlx.expr.NullSafeFieldAccessExpr;
-import com.github.javaparser.ast.drlx.expr.NullSafeMethodCallExpr;
-import com.github.javaparser.ast.drlx.expr.PointFreeExpr;
-import com.github.javaparser.ast.drlx.expr.TemporalLiteralChunkExpr;
-import com.github.javaparser.ast.drlx.expr.TemporalLiteralExpr;
-import com.github.javaparser.ast.drlx.expr.TemporalLiteralInfiniteChunkExpr;
-import com.github.javaparser.ast.expr.BigDecimalLiteralExpr;
-import com.github.javaparser.ast.expr.BigIntegerLiteralExpr;
+import org.drools.drlcostraintparser.ast.expr.OOPathChunk;
+import org.drools.drlcostraintparser.ast.expr.OOPathExpr;
+import org.drools.drlcostraintparser.ast.expr.RuleBody;
+import org.drools.drlcostraintparser.ast.expr.RuleConsequence;
+import org.drools.drlcostraintparser.ast.expr.RuleDeclaration;
+import org.drools.drlcostraintparser.ast.expr.RulePattern;
+import org.drools.drlcostraintparser.ast.expr.CommaSeparatedMethodCallExpr;
+import org.drools.drlcostraintparser.ast.expr.DrlxExpression;
+import org.drools.drlcostraintparser.ast.expr.HalfBinaryExpr;
+import org.drools.drlcostraintparser.ast.expr.HalfPointFreeExpr;
+import org.drools.drlcostraintparser.ast.expr.InlineCastExpr;
+import org.drools.drlcostraintparser.ast.expr.NullSafeFieldAccessExpr;
+import org.drools.drlcostraintparser.ast.expr.NullSafeMethodCallExpr;
+import org.drools.drlcostraintparser.ast.expr.PointFreeExpr;
+import org.drools.drlcostraintparser.ast.expr.TemporalLiteralChunkExpr;
+import org.drools.drlcostraintparser.ast.expr.TemporalLiteralExpr;
+import org.drools.drlcostraintparser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.drools.drlcostraintparser.ast.expr.BigDecimalLiteralExpr;
+import org.drools.drlcostraintparser.ast.expr.BigIntegerLiteralExpr;
 
 public interface VoidRuleVisitor<A> {
 

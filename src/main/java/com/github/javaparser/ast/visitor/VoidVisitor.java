@@ -20,6 +20,7 @@
  */
 package com.github.javaparser.ast.visitor;
 
+import org.drools.drlcostraintparser.ast.expr.DrlNameExpr;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.BlockComment;
@@ -145,7 +146,7 @@ public interface VoidVisitor<A> {
 
     void visit(MethodReferenceExpr n, A arg);
 
-    void visit(NameExpr n, A arg);
+    void visit(DrlNameExpr n, A arg);
 
     void visit(Name n, A arg);
 

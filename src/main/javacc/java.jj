@@ -55,10 +55,9 @@ import java.util.concurrent.TimeUnit;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.*;
-import com.github.javaparser.ast.drlx.*;
-import com.github.javaparser.ast.drlx.expr.*;
 import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.expr.*;
+import org.drools.drlcostraintparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.*;
 import com.github.javaparser.utils.*;
@@ -1383,7 +1382,7 @@ Expression PreDecrementExpression():
   { return ret; }
 }
 
-// drlx start
+// drlcontraintparser start
 Expression HalfBinaryExpression():
 {
 	Expression ret;
@@ -1445,7 +1444,7 @@ Expression DrlxExpressionSwitch():
 }
 
 
-// drlx end
+// drlcontraintparser end
 
 Expression UnaryExpressionNotPlusMinus():
 {
@@ -1607,7 +1606,7 @@ Expression PrimaryPrefix():
 	  		if (hasArgs) {
 	  			ret = new MethodCallExpr(range(begin, token()), null, null, name, args);
 			} else {
-	  			ret = new NameExpr(name, numberOfBackReferences );
+	  			ret = new DrlNameExpr(name, numberOfBackReferences );
 			}
 	  	}
   )
@@ -1659,7 +1658,7 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
 	)
 	|
 	  "["ret = Expression() "]" { ret = new ArrayAccessExpr(range(scope, token()), scope, ret); }
-// drlx start
+// drlcontraintparser start
 	|
 	  "#" {isDrl=true;}
 	  (
@@ -1686,7 +1685,7 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
             }
         }
         )
-// drlx end
+// drlcontraintparser end
   )
   { return isDrl ? asDrlNode(ret) : ret; }
 }

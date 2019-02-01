@@ -16,8 +16,8 @@
 
 package com.github.javaparser.ast.visitor;
 
-import com.github.javaparser.ast.drlx.RuleBody;
-import com.github.javaparser.ast.drlx.RuleDeclaration;
+import org.drools.drlcostraintparser.ast.expr.RuleBody;
+import org.drools.drlcostraintparser.ast.expr.RuleDeclaration;
 
 public class VoidRuleVisitorAdapter<A> extends AbstractVoidRuleVisitor<A, VoidVisitor<A>> {
 

@@ -16,7 +16,13 @@
 
 package com.github.javaparser.printer;
 
-import com.github.javaparser.ast.drlx.*;
+import org.drools.drlcostraintparser.ast.expr.OOPathChunk;
+import org.drools.drlcostraintparser.ast.expr.OOPathExpr;
+import org.drools.drlcostraintparser.ast.expr.RuleBody;
+import org.drools.drlcostraintparser.ast.expr.RuleConsequence;
+import org.drools.drlcostraintparser.ast.expr.RuleDeclaration;
+import org.drools.drlcostraintparser.ast.expr.RuleItem;
+import org.drools.drlcostraintparser.ast.expr.RulePattern;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
@@ -36,7 +42,7 @@ public class DrlPrintVisitor extends AbstractVoidRuleVisitor<Void, PrettyPrintVi
     }
 
     @Override
-    public void visit( RuleDeclaration rule, Void arg ) {
+    public void visit(RuleDeclaration rule, Void arg ) {
         visitor.printComment(rule.getComment(), arg);
 
         for (AnnotationExpr ae : rule.getAnnotations()) {
@@ -52,13 +58,13 @@ public class DrlPrintVisitor extends AbstractVoidRuleVisitor<Void, PrettyPrintVi
     }
 
     @Override
-    public void visit( RuleBody ruleBody, Void arg ) {
+    public void visit(RuleBody ruleBody, Void arg ) {
         Map<String, RuleConsequence> consequences = new HashMap<>();
         RuleConsequence lastConsequence = null;
         int itemsNr = ruleBody.getItems().size();
 
         for ( int i = 0; i < itemsNr; i++ ) {
-            RuleItem item = ruleBody.getItems().get( i );
+            RuleItem item = ruleBody.getItems().get(i );
             if (item instanceof RulePattern) {
                 RulePattern pattern = ( (RulePattern) item );
                 pattern.accept( visitor, arg );
@@ -106,7 +112,7 @@ public class DrlPrintVisitor extends AbstractVoidRuleVisitor<Void, PrettyPrintVi
     }
 
     @Override
-    public void visit( OOPathExpr expr, Void arg ) {
+    public void visit(OOPathExpr expr, Void arg ) {
         for ( Iterator<OOPathChunk> i = expr.getChunks().iterator(); i.hasNext(); ) {
             OOPathChunk chunk = i.next();
             chunk.accept( visitor, arg );

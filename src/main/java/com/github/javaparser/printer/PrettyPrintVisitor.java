@@ -21,13 +21,13 @@
 
 package com.github.javaparser.printer;
 
+import org.drools.drlcostraintparser.ast.expr.DrlNameExpr;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.BlockComment;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
-import com.github.javaparser.ast.drlx.expr.HalfBinaryExpr;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.nodeTypes.*;
@@ -234,7 +234,7 @@ public class PrettyPrintVisitor implements VoidVisitor<Void> {
     }
 
     @Override
-    public void visit(final NameExpr n, final Void arg) {
+    public void visit(final DrlNameExpr n, final Void arg) {
         printComment(n.getComment(), arg);
         java.util.stream.IntStream.range(0, n.getBackReferencesCount()).forEach(s -> printer.print("../"));
         n.getName().accept(this, arg);

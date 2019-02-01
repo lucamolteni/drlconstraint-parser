@@ -20,6 +20,7 @@
  */
 package com.github.javaparser.ast.visitor;
 
+import org.drools.drlcostraintparser.ast.expr.DrlNameExpr;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.BlockComment;
@@ -131,7 +132,7 @@ public interface GenericVisitor<R, A> {
 
     R visit(MethodCallExpr n, A arg);
 
-    R visit(NameExpr n, A arg);
+    R visit(DrlNameExpr n, A arg);
 
     R visit(ObjectCreationExpr n, A arg);
 

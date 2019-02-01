@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.drlx.RuleDeclaration;
+import org.drools.drlcostraintparser.ast.expr.RuleDeclaration;
 import com.github.javaparser.ast.visitor.VoidRuleVisitor;
 
 public class PrintUtil {

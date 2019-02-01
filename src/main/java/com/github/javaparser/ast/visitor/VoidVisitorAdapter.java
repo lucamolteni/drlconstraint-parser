@@ -20,12 +20,12 @@
  */
 package com.github.javaparser.ast.visitor;
 
+import org.drools.drlcostraintparser.ast.expr.DrlNameExpr;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.BlockComment;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
-import com.github.javaparser.ast.drlx.expr.HalfBinaryExpr;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.stmt.*;
@@ -382,7 +382,7 @@ public abstract class VoidVisitorAdapter<A> implements VoidVisitor<A> {
     }
 
     @Override
-    public void visit(final NameExpr n, final A arg) {
+    public void visit(final DrlNameExpr n, final A arg) {
         n.getName().accept(this, arg);
         n.getComment().ifPresent(l -> l.accept(this, arg));
     }
