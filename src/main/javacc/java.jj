@@ -637,26 +637,6 @@ TOKEN :
 
 TOKEN: { <CTRL_Z: "\u001A" /** ctrl+z char **/> }
 
-/*****************************************
- * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
- *****************************************/
-
-/*
- * Program structuring syntax follows.
- */
-
-PackageDeclaration PackageDeclaration():
-{
-	NodeList<AnnotationExpr> annotations = new NodeList<AnnotationExpr>();
-	Name name;
-	JavaToken begin;
-}
-{
-  "package" {begin = token();}  name = Name() ";"
-  { return new PackageDeclaration(range(begin, token()), annotations, name); }
-}
-
-
 /*
  * Declaration syntax follows.
  */
@@ -1805,10 +1785,6 @@ Name NameParseStart():
 SimpleName SimpleNameParseStart():
 { SimpleName ret; }
 { ret = SimpleName() <EOF> { return ret; } }
-
-PackageDeclaration PackageDeclarationParseStart():
-{ PackageDeclaration ret; }
-{ ret = PackageDeclaration() <EOF> { return ret; } }
 
 TypeParameter TypeParameterParseStart():
 {

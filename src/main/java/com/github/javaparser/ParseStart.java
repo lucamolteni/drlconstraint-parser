@@ -51,7 +51,6 @@ public interface ParseStart<R> {
     ParseStart<ExplicitConstructorInvocationStmt> EXPLICIT_CONSTRUCTOR_INVOCATION_STMT = GeneratedDrlConstraintParser::ExplicitConstructorInvocationParseStart;
     ParseStart<Name> NAME = GeneratedDrlConstraintParser::NameParseStart;
     ParseStart<SimpleName> SIMPLE_NAME = GeneratedDrlConstraintParser::SimpleNameParseStart;
-    ParseStart<PackageDeclaration> PACKAGE_DECLARATION = GeneratedDrlConstraintParser::PackageDeclarationParseStart;
 
     R parse(GeneratedDrlConstraintParser parser) throws ParseException;
 }

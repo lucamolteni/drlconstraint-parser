@@ -41,7 +41,6 @@ import static com.github.javaparser.ParseStart.CLASS_OR_INTERFACE_TYPE;
 import static com.github.javaparser.ParseStart.EXPLICIT_CONSTRUCTOR_INVOCATION_STMT;
 import static com.github.javaparser.ParseStart.EXPRESSION;
 import static com.github.javaparser.ParseStart.NAME;
-import static com.github.javaparser.ParseStart.PACKAGE_DECLARATION;
 import static com.github.javaparser.ParseStart.SIMPLE_NAME;
 import static com.github.javaparser.ParseStart.TYPE;
 import static com.github.javaparser.ParseStart.TYPE_PARAMETER;
@@ -340,17 +339,6 @@ public final class DrlConstraintParser {
      */
     public static SimpleName parseSimpleName(String name) {
         return simplifiedParse(SIMPLE_NAME, provider(name));
-    }
-
-    /**
-     * Parses a package declaration and returns it as a PackageDeclaration.
-     *
-     * @param packageDeclaration a declaration like "package com.microsoft.java;"
-     * @return the AST for the parameter
-     * @throws ParseProblemException if the source code has parser errors
-     */
-    public static PackageDeclaration parsePackageDeclaration(String packageDeclaration) {
-        return simplifiedParse(PACKAGE_DECLARATION, provider(packageDeclaration));
     }
 
     /**
