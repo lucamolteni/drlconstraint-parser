@@ -26,10 +26,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.PackageDeclaration;
-import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.Name;
 import com.github.javaparser.ast.expr.SimpleName;
@@ -42,10 +40,8 @@ import com.github.javaparser.javadoc.Javadoc;
 import static com.github.javaparser.ParseStart.CLASS_OR_INTERFACE_TYPE;
 import static com.github.javaparser.ParseStart.EXPLICIT_CONSTRUCTOR_INVOCATION_STMT;
 import static com.github.javaparser.ParseStart.EXPRESSION;
-import static com.github.javaparser.ParseStart.IMPORT_DECLARATION;
 import static com.github.javaparser.ParseStart.NAME;
 import static com.github.javaparser.ParseStart.PACKAGE_DECLARATION;
-import static com.github.javaparser.ParseStart.PARAMETER;
 import static com.github.javaparser.ParseStart.SIMPLE_NAME;
 import static com.github.javaparser.ParseStart.TYPE;
 import static com.github.javaparser.ParseStart.TYPE_PARAMETER;
@@ -267,18 +263,6 @@ public final class DrlConstraintParser {
     }
 
     /**
-     * Parses the Java import contained in a {@link String} and returns a
-     * {@link ImportDeclaration} that represents it.
-     *
-     * @param importDeclaration {@link String} containing Java import code
-     * @return ImportDeclaration representing the Java import declaration
-     * @throws ParseProblemException if the source code has parser errors
-     */
-    public static ImportDeclaration parseImport(final String importDeclaration) {
-        return simplifiedParse(IMPORT_DECLARATION, provider(importDeclaration));
-    }
-
-    /**
      * Parses the Java expression contained in a {@link String} and returns a
      * {@link Expression} that represents it.
      *
@@ -356,17 +340,6 @@ public final class DrlConstraintParser {
      */
     public static SimpleName parseSimpleName(String name) {
         return simplifiedParse(SIMPLE_NAME, provider(name));
-    }
-
-    /**
-     * Parses a single parameter (a type and a name) and returns it as a Parameter.
-     *
-     * @param parameter a parameter like "int[] x"
-     * @return the AST for the parameter
-     * @throws ParseProblemException if the source code has parser errors
-     */
-    public static Parameter parseParameter(String parameter) {
-        return simplifiedParse(PARAMETER, provider(parameter));
     }
 
     /**

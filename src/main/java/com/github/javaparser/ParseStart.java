@@ -44,7 +44,6 @@ import com.github.javaparser.ast.type.TypeParameter;
  */
 @FunctionalInterface
 public interface ParseStart<R> {
-    ParseStart<ImportDeclaration> IMPORT_DECLARATION = GeneratedDrlConstraintParser::ImportDeclarationParseStart;
     ParseStart<Expression> EXPRESSION = GeneratedDrlConstraintParser::ExpressionParseStart;
     ParseStart<ClassOrInterfaceType> CLASS_OR_INTERFACE_TYPE = GeneratedDrlConstraintParser::ClassOrInterfaceTypeParseStart;
     ParseStart<Type> TYPE = GeneratedDrlConstraintParser::ResultTypeParseStart;
@@ -52,7 +51,6 @@ public interface ParseStart<R> {
     ParseStart<ExplicitConstructorInvocationStmt> EXPLICIT_CONSTRUCTOR_INVOCATION_STMT = GeneratedDrlConstraintParser::ExplicitConstructorInvocationParseStart;
     ParseStart<Name> NAME = GeneratedDrlConstraintParser::NameParseStart;
     ParseStart<SimpleName> SIMPLE_NAME = GeneratedDrlConstraintParser::SimpleNameParseStart;
-    ParseStart<Parameter> PARAMETER = GeneratedDrlConstraintParser::ParameterParseStart;
     ParseStart<PackageDeclaration> PACKAGE_DECLARATION = GeneratedDrlConstraintParser::PackageDeclarationParseStart;
 
     R parse(GeneratedDrlConstraintParser parser) throws ParseException;
