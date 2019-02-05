@@ -48,7 +48,7 @@ PARSER_BEGIN(GeneratedDrlConstraintParser)
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  */
-package com.github.javaparser;
+package org.drools.constraint.parser;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -57,19 +57,26 @@ import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.*;
 import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.expr.*;
-import org.drools.drlcostraintparser.ast.expr.*;
+import org.drools.constraint.parser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.*;
 import com.github.javaparser.utils.*;
+
+import com.github.javaparser.Problem;
+import com.github.javaparser.TokenRange;
+import com.github.javaparser.TokenRange;
+import com.github.javaparser.Token;
+import com.github.javaparser.JavaToken;
+
 import static com.github.javaparser.JavaToken.INVALID;
 import static com.github.javaparser.ast.Node.Parsedness.UNPARSABLE;
 import static com.github.javaparser.utils.Utils.*;
 import static com.github.javaparser.ast.NodeList.*;
-import static com.github.javaparser.GeneratedDrlConstraintParser.*;
+import static org.drools.constraint.parser.GeneratedDrlConstraintParser.*;
 import static com.github.javaparser.Range.*;
 import static com.github.javaparser.Position.*;
 import static com.github.javaparser.ast.type.ArrayType.*;
-import static com.github.javaparser.GeneratedDrlConstraintParserTokenManagerBase.*;
+import static org.drools.constraint.parser.GeneratedDrlConstraintParserTokenManagerBase.*;
 
 @Generated("JavaCC")
 public final class GeneratedDrlConstraintParser extends GeneratedDrlConstraintParserBase {
