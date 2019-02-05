@@ -16,33 +16,15 @@
 
 package com.github.javaparser.printer;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
-
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import org.drools.drlcostraintparser.ast.expr.RuleDeclaration;
-import com.github.javaparser.ast.visitor.VoidRuleVisitor;
 
 public class PrintUtil {
 
-    public static String toJava(Node node ) {
-        return node.toString();
+    public static String printConstraint(Node node) {
+        PrettyPrinterConfiguration prettyPrinterConfiguration = new PrettyPrinterConfiguration();
+        ConstraintPrintVisitor constraintPrintVisitor = new ConstraintPrintVisitor(prettyPrinterConfiguration);
+        node.accept(constraintPrintVisitor, null);
+        return constraintPrintVisitor.getSource();
     }
 
-    public static String toDrlx(Node node) {
-        return node.toString(getConf( DrlxPrintVisitor::new, type -> true ));
-    }
-
-    public static String toDrl(Node node) {
-        return node.toString(getConf( DrlPrintVisitor::new, type -> type instanceof RuleDeclaration ) );
-    }
-
-    private static PrettyPrinterConfiguration getConf( Function<PrettyPrintVisitor, VoidRuleVisitor<Void>> f, Predicate<TypeDeclaration> p ) {
-        return new PrettyPrinterConfiguration().setVisitorFactory( c -> {
-            PrettyPrintVisitor visitor = new PrettyPrintVisitor( c );
-            visitor.setRuleVisitor( f.apply( visitor ) );
-            return visitor;
-        } );
-    }
 }

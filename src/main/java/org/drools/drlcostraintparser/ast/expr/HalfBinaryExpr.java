@@ -29,6 +29,8 @@ import com.github.javaparser.ast.expr.BooleanLiteralExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.observer.ObservableProperty;
 import com.github.javaparser.ast.visitor.CloneVisitor;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.metamodel.BinaryExprMetaModel;
@@ -84,14 +86,14 @@ public final class HalfBinaryExpr extends Expression {
         customInitialization();
     }
 
-    @Override
+@Override
     public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
-        return v.getRuleGenericVisitor().visit(this, arg);
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
     public <A> void accept(VoidVisitor<A> v, A arg) {
-        v.getRuleVisitor().visit(this, arg);
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
 
     @Generated("com.github.javaparser.generator.core.node.PropertyGenerator")

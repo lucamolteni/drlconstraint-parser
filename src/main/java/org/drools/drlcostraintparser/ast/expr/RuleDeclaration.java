@@ -21,6 +21,8 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.SimpleName;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration;
@@ -35,13 +37,13 @@ public class RuleDeclaration extends TypeDeclaration<RuleDeclaration> {
     }
 
     @Override
-    public <R, A> R accept(final GenericVisitor<R, A> v, final A arg) {
-        throw new UnsupportedOperationException();
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
-    public <A> void accept(final VoidVisitor<A> v, final A arg) {
-        v.getRuleVisitor().visit( this, arg );
+    public <A> void accept(VoidVisitor<A> v, A arg) {
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
 
     public RuleBody getRuleBody() {

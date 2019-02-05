@@ -33,6 +33,8 @@ import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
 import com.github.javaparser.ast.observer.ObservableProperty;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.visitor.CloneVisitor;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.metamodel.JavaParserMetaModel;
@@ -83,15 +85,13 @@ public final class DrlNameExpr extends Expression implements NodeWithSimpleName<
     }
 
     @Override
-    @Generated("com.github.javaparser.generator.core.node.AcceptGenerator")
-    public <R, A> R accept(final GenericVisitor<R, A> v, final A arg) {
-        return v.visit(this, arg);
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
-    @Generated("com.github.javaparser.generator.core.node.AcceptGenerator")
-    public <A> void accept(final VoidVisitor<A> v, final A arg) {
-        v.visit(this, arg);
+    public <A> void accept(VoidVisitor<A> v, A arg) {
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
 
     @Generated("com.github.javaparser.generator.core.node.PropertyGenerator")

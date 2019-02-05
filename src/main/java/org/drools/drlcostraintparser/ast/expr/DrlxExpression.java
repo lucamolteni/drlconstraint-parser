@@ -20,6 +20,8 @@ import com.github.javaparser.TokenRange;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
@@ -28,22 +30,22 @@ public class DrlxExpression extends Node {
     private final SimpleName bind;
     private final Expression expr;
 
-    public DrlxExpression( SimpleName bind, Expression expr ) {
+    public DrlxExpression(SimpleName bind, Expression expr) {
         super(bind != null ?
-                new TokenRange(bind.getTokenRange().get().getBegin(), expr.getTokenRange().get().getEnd()) :
-                expr.getTokenRange().get());
+                      new TokenRange(bind.getTokenRange().get().getBegin(), expr.getTokenRange().get().getEnd()) :
+                      expr.getTokenRange().get());
         this.bind = bind;
         this.expr = expr;
     }
 
     @Override
-    public <R, A> R accept( GenericVisitor<R, A> v, A arg ) {
-        return v.getRuleGenericVisitor().visit(this, arg);
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
-    public <A> void accept( VoidVisitor<A> v, A arg ) {
-        v.getRuleVisitor().visit( this, arg );
+    public <A> void accept(VoidVisitor<A> v, A arg) {
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
 
     public SimpleName getBind() {

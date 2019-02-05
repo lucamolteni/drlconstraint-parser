@@ -30,6 +30,8 @@ import com.github.javaparser.ast.observer.ObservableProperty;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.CloneVisitor;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
@@ -146,12 +148,13 @@ public class InlineCastExpr extends Expression implements NodeWithType<InlineCas
     }
 
     @Override
-    public <R, A> R accept( GenericVisitor<R, A> v, A arg ) {
-        return v.getRuleGenericVisitor().visit(this, arg);
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
-    public <A> void accept( VoidVisitor<A> v, A arg ) {
-        v.getRuleVisitor().visit( this, arg );
+    public <A> void accept(VoidVisitor<A> v, A arg) {
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
+
 }

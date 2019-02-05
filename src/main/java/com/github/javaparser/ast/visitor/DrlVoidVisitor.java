@@ -16,6 +16,7 @@
 
 package com.github.javaparser.ast.visitor;
 
+import org.drools.drlcostraintparser.ast.expr.DrlNameExpr;
 import org.drools.drlcostraintparser.ast.expr.OOPathChunk;
 import org.drools.drlcostraintparser.ast.expr.OOPathExpr;
 import org.drools.drlcostraintparser.ast.expr.RuleBody;
@@ -36,7 +37,7 @@ import org.drools.drlcostraintparser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.drools.drlcostraintparser.ast.expr.BigDecimalLiteralExpr;
 import org.drools.drlcostraintparser.ast.expr.BigIntegerLiteralExpr;
 
-public interface VoidRuleVisitor<A> {
+public interface DrlVoidVisitor<A> extends VoidVisitor<A> {
 
     default void visit( RuleDeclaration ruleDeclaration, A arg ) { }
 
@@ -75,4 +76,6 @@ public interface VoidRuleVisitor<A> {
     default void visit(TemporalLiteralInfiniteChunkExpr temporalLiteralInfiniteChunkExpr, A arg) { }
 
     default void visit(CommaSeparatedMethodCallExpr commaSeparatedMethodCallExpr, A arg) {  }
+
+    default void visit(DrlNameExpr drlNameExpr, A arg) { };
 }

@@ -18,6 +18,8 @@ package org.drools.drlcostraintparser.ast.expr;
 
 import com.github.javaparser.TokenRange;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.visitor.DrlGenericVisitor;
+import com.github.javaparser.ast.visitor.DrlVoidVisitor;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
@@ -35,12 +37,13 @@ public class RuleConsequence extends RuleItem {
     }
 
     @Override
-    public <R, A> R accept( GenericVisitor<R, A> v, A arg ) {
-        throw new UnsupportedOperationException();
+    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
+        return ((DrlGenericVisitor<R, A>)v).visit(this, arg);
     }
 
     @Override
-    public <A> void accept( VoidVisitor<A> v, A arg ) {
-        v.getRuleVisitor().visit( this, arg );
+    public <A> void accept(VoidVisitor<A> v, A arg) {
+        ((DrlVoidVisitor<A>)v).visit(this, arg);
     }
+
 }

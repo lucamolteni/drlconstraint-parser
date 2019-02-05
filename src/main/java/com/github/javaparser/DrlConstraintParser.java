@@ -77,6 +77,7 @@ public final class DrlConstraintParser {
      */
     public DrlConstraintParser(ParserConfiguration configuration) {
         this.configuration = configuration;
+        configuration.getPostProcessors().clear();
     }
 
     /**
