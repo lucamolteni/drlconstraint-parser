@@ -12,7 +12,7 @@ import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.type.UnknownType;
 import com.github.javaparser.utils.Pair;
 import com.github.javaparser.Problem;
-import com.github.javaparser.Token;
+import org.drools.constraint.parser.Token;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.TokenRange;
 
@@ -158,7 +158,8 @@ abstract class GeneratedDrlConstraintParserBase {
 
     /* Sets the kind of the last matched token to newKind */
     void setTokenKind(int newKind) {
-        token().setKind(newKind);
+        org.drools.constraint.parser.JavaToken token = (org.drools.constraint.parser.JavaToken)token();
+        token.setKind(newKind);
     }
 
     /* Makes the parser keep a list of tokens */

@@ -6,7 +6,7 @@ import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.TokenRange;
 import com.github.javaparser.Problem;
-import com.github.javaparser.Token;
+import org.drools.constraint.parser.Token;
 import com.github.javaparser.JavaToken;
 import com.github.javaparser.Range;
 

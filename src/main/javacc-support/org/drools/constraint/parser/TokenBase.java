@@ -7,7 +7,7 @@ import com.github.javaparser.JavaToken;
 /**
  * Base class for the generated {@link Token}
  */
-abstract class TokenBase {
+abstract class TokenBase extends com.github.javaparser.Token {
     /**
      * For tracking the >> >>> ambiguity.
      */
