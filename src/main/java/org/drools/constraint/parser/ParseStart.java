@@ -51,5 +51,5 @@ public interface ParseStart<R> {
     ParseStart<Name> NAME = GeneratedDrlConstraintParser::NameParseStart;
     ParseStart<SimpleName> SIMPLE_NAME = GeneratedDrlConstraintParser::SimpleNameParseStart;
 
-    R parse(GeneratedDrlConstraintParser parser) throws ParseException;
+    R parse(GeneratedDrlConstraintParser parser) throws ParseException, org.drools.constraint.parser.ParseException;
 }
