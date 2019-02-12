@@ -11,20 +11,9 @@ public class JavaToken extends com.github.javaparser.JavaToken {
     private int kind;
     private String text;
 
-
     public JavaToken(int kind, String text) {
         super(kind, text);
         this.kind = kind;
-        this.text = text;
-    }
-
-    public JavaToken(Token token, List<com.github.javaparser.JavaToken> tokens) {
-        super(token.kind, token.image);
-
-        Range range = Range.range(token.beginLine, token.beginColumn, token.endLine, token.endColumn);
-        String text = token.image;
-        setRange(range);
-        this.kind = token.kind;
         this.text = text;
     }
 
