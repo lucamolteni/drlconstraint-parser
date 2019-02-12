@@ -21,12 +21,12 @@ import java.util.function.Function;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ParseResult;
-import com.github.javaparser.Provider;
+import org.drools.constraint.parser.Provider;
 import com.github.javaparser.ast.Node;
 import org.drools.constraint.parser.ast.expr.DrlxExpression;
 import org.drools.constraint.parser.ast.expr.TemporalLiteralExpr;
 
-import static com.github.javaparser.Providers.provider;
+import static org.drools.constraint.parser.Providers.provider;
 
 public class DrlxParser {
 
