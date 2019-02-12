@@ -82,6 +82,9 @@ import static org.drools.constraint.parser.GeneratedDrlConstraintParserTokenMana
 public final class GeneratedDrlConstraintParser extends GeneratedDrlConstraintParserBase {
     /* Returns the JavaParser specific token type of the last matched token */
     JavaToken token() {
+        if(token.toString() == null) {
+            return null;
+        }
         return new org.drools.constraint.parser.JavaToken(token.javaToken.getKind(), token.javaToken.getText());
     }
 
