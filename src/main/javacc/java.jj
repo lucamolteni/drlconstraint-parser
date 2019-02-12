@@ -177,7 +177,7 @@ TOKEN_MGR_DECLS :
         // The stack is now filled with tokens in left-to-right order. Process them.
         while(!tokenWorkStack.empty()) {
             token = tokenWorkStack.pop();
-            token.javaToken = new JavaToken(token, tokens);
+            token.javaToken = new org.drools.constraint.parser.JavaToken(token, tokens);
 
             if(storeTokens) {
                 tokens.add(token.javaToken);
