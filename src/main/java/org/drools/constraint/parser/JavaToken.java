@@ -1,9 +1,5 @@
 package org.drools.constraint.parser;
 
-import java.util.List;
-
-import com.github.javaparser.Range;
-import com.github.javaparser.Token;
 import com.github.javaparser.TokenTypes;
 
 public class JavaToken extends com.github.javaparser.JavaToken {

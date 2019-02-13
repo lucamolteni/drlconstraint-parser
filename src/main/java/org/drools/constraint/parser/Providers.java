@@ -31,10 +31,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.drools.constraint.parser.Provider;
-import org.drools.constraint.parser.StreamProvider;
-import org.drools.constraint.parser.StringProvider;
-
 import static com.github.javaparser.utils.Utils.assertNotNull;
 
 /**

@@ -21,7 +21,6 @@
 
 package org.drools.constraint.parser;
 
-import org.drools.constraint.parser.GeneratedDrlConstraintParser;
 import com.github.javaparser.ParseException;
 import com.github.javaparser.Provider;
 import com.github.javaparser.ast.expr.Expression;

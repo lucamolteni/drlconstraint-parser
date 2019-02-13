@@ -146,16 +146,6 @@ abstract class GeneratedDrlConstraintParserBase {
         return null;
     }
 
-    /**
-     * Get the token that starts the NodeList l
-     */
-    JavaToken nodeListBegin(NodeList<?> l) {
-        if (!storeTokens || l.isEmpty()) {
-            return JavaToken.INVALID;
-        }
-        return l.get(0).getTokenRange().get().getBegin();
-    }
-
     /* Sets the kind of the last matched token to newKind */
     void setTokenKind(int newKind) {
         org.drools.constraint.parser.JavaToken token = (org.drools.constraint.parser.JavaToken)token();
@@ -210,27 +200,6 @@ abstract class GeneratedDrlConstraintParserBase {
     }
 
     /**
-     * Add obj to list only when list is not null
-     */
-    <T extends Node> NodeList<T> addWhenNotNull(NodeList<T> list, T obj) {
-        if (obj == null) {
-            return list;
-        }
-        return add(list, obj);
-    }
-
-    /**
-     * Add obj to list at position pos
-     */
-    <T extends Node> NodeList<T> prepend(NodeList<T> list, T obj) {
-        if (list == null) {
-            list = new NodeList<>();
-        }
-        list.addFirst(obj);
-        return list;
-    }
-
-    /**
      * Add obj to list
      */
     <T> List<T> add(List<T> list, T obj) {
@@ -239,71 +208,6 @@ abstract class GeneratedDrlConstraintParserBase {
         }
         list.add(obj);
         return list;
-    }
-
-    /**
-     * Propagate expansion of the range on the right to the parent. This is necessary when the right border of the child
-     * is determining the right border of the parent (i.e., the child is the last element of the parent). In this case
-     * when we "enlarge" the child we should enlarge also the parent.
-     */
-    private void propagateRangeGrowthOnRight(Node node, Node endNode) {
-        if (storeTokens) {
-            node.getParentNode().ifPresent(nodeParent -> {
-                boolean isChildOnTheRightBorderOfParent = node.getTokenRange().get().getEnd().equals(nodeParent.getTokenRange().get().getEnd());
-                if (isChildOnTheRightBorderOfParent) {
-                    propagateRangeGrowthOnRight(nodeParent, endNode);
-                }
-            });
-            node.setTokenRange(range(node, endNode));
-        }
-    }
-
-    /**
-     * Workaround for rather complex ambiguity that lambda's create
-     */
-    Expression generateLambda(Expression ret, Statement lambdaBody) {
-        if (ret instanceof EnclosedExpr) {
-            Expression inner = ((EnclosedExpr) ret).getInner();
-            SimpleName id = ((NameExpr) inner).getName();
-            NodeList<Parameter> params = add(new NodeList<>(), new Parameter(ret.getTokenRange().orElse(null), new NodeList<>(), new NodeList<>(), new UnknownType(), false, new NodeList<>(), id));
-            ret = new LambdaExpr(range(ret, lambdaBody), params, lambdaBody, true);
-        } else if (ret instanceof NameExpr) {
-            SimpleName id = ((NameExpr) ret).getName();
-            NodeList<Parameter> params = add(new NodeList<>(), new Parameter(ret.getTokenRange().orElse(null), new NodeList<>(), new NodeList<>(), new UnknownType(), false, new NodeList<>(), id));
-            ret = new LambdaExpr(range(ret, lambdaBody), params, lambdaBody, false);
-        } else if (ret instanceof LambdaExpr) {
-            ((LambdaExpr) ret).setBody(lambdaBody);
-            propagateRangeGrowthOnRight(ret, lambdaBody);
-        } else if (ret instanceof CastExpr) {
-            CastExpr castExpr = (CastExpr) ret;
-            Expression inner = generateLambda(castExpr.getExpression(), lambdaBody);
-            castExpr.setExpression(inner);
-        } else {
-            addProblem("Failed to parse lambda expression! Please create an issue at https://github.com/javaparser/javaparser/issues");
-        }
-        return ret;
-    }
-
-    /**
-     * Throws together an ArrayCreationExpr from a lot of pieces
-     */
-    ArrayCreationExpr juggleArrayCreation(TokenRange range, List<TokenRange> levelRanges, Type type, NodeList<Expression> dimensions, List<NodeList<AnnotationExpr>> arrayAnnotations, ArrayInitializerExpr arrayInitializerExpr) {
-        NodeList<ArrayCreationLevel> levels = new NodeList<>();
-
-        for (int i = 0; i < arrayAnnotations.size(); i++) {
-            levels.add(new ArrayCreationLevel(levelRanges.get(i), dimensions.get(i), arrayAnnotations.get(i)));
-        }
-        return new ArrayCreationExpr(range, type, levels, arrayInitializerExpr);
-    }
-
-    /**
-     * Throws together a Type, taking care of all the array brackets
-     */
-    Type juggleArrayType(Type partialType, List<ArrayType.ArrayBracketPair> additionalBrackets) {
-        Pair<Type, List<ArrayType.ArrayBracketPair>> partialParts = unwrapArrayTypes(partialType);
-        Type elementType = partialParts.a;
-        List<ArrayType.ArrayBracketPair> leftMostBrackets = partialParts.b;
-        return wrapInArrayTypes(elementType, leftMostBrackets, additionalBrackets).clone();
     }
 
     /**
