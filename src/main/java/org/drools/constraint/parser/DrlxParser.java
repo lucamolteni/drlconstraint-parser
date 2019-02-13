@@ -29,14 +29,9 @@ import static org.drools.constraint.parser.Providers.provider;
 
 public class DrlxParser {
 
-    private static final Function<Collection<String>,  ParseStart<DrlxExpression>> DRLX_EXPRESSION = (operators) -> parser -> {
-        parser.setDrlParsing(true);
+    private static final Function<Collection<String>, ParseStart<DrlxExpression>> DRLX_EXPRESSION = (operators) -> parser -> {
         parser.setPointFreeOperators(operators);
-        try {
-            return parser.DrlxExpression();
-        } finally {
-            parser.setDrlParsing(false);
-        }
+        return parser.DrlxExpression();
     };
 
     private static final ParseStart<TemporalLiteralExpr> DRLX_TEMPORAL_LITERAL = parser -> {
@@ -51,7 +46,7 @@ public class DrlxParser {
         return (T) simplifiedParse(parser, provider(expression));
     }
 
-    private static <T extends Node> T simplifiedParse( ParseStart<T> context, Provider provider ) {
+    private static <T extends Node> T simplifiedParse(ParseStart<T> context, Provider provider) {
         ParseResult<T> result = new DrlConstraintParser().parse(context, provider);
         if (result.isSuccessful()) {
             return result.getResult().get();

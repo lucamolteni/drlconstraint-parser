@@ -99,18 +99,6 @@ public final class GeneratedDrlConstraintParser extends GeneratedDrlConstraintPa
         return token_source;
     }
 
-    private boolean drlParsing = false;
-    public void setDrlParsing(boolean drlParsing) {
-        this.drlParsing = drlParsing;
-    }
-
-    private <T extends Node> T asDrlNode(T node) throws ParseException {
-        if (!drlParsing) {
-            throw new ParseException();
-        }
-        return node;
-    }
-
     private Collection<String> pointFreeOperators = new ArrayList<String>();
     public void setPointFreeOperators(Collection<String> pointFreeOperators) {
         this.pointFreeOperators = pointFreeOperators;
@@ -1243,7 +1231,6 @@ Expression HalfBinaryExpression():
 	Expression ret;
 	HalfBinaryExpr.Operator op;
 	JavaToken begin = INVALID;
-	boolean isDrl = false;
 }
 {
   (
@@ -1261,41 +1248,39 @@ Expression HalfBinaryExpression():
 	    ret = Expression()
 	  )
 	  {
-	    isDrl = true;
         ret = new HalfBinaryExpr(range(begin, token()), ret, op);
 	  }
 	|
 	  ret = DrlxExpressionSwitch()
   )
-  { return isDrl ? asDrlNode(ret) : ret; }
+  { return ret; }
 }
 
 Expression DrlxExpressionSwitch():
 {
 	Expression ret;
-    boolean isDrl = false;
 }
 {
   (
-  LOOKAHEAD(CommaSeparatedMethodCallExpr(), { drlParsing })
+  LOOKAHEAD(CommaSeparatedMethodCallExpr())
     ret = CommaSeparatedMethodCallExpr()
   |
-  LOOKAHEAD(PointFreeExprMvel(), { drlParsing })
+  LOOKAHEAD(PointFreeExprMvel())
     ret = PointFreeExprMvel()
   |
-  LOOKAHEAD(HalfPointFreeExprMvel(), { drlParsing })
+  LOOKAHEAD(HalfPointFreeExprMvel())
     ret = HalfPointFreeExprMvel()
   |
-  LOOKAHEAD(PointFreeExpr(), { drlParsing })
+  LOOKAHEAD(PointFreeExpr())
     ret = PointFreeExpr()
   |
-  LOOKAHEAD( HalfPointFreeExpr(), { drlParsing && (isPointFreeOperator(getToken(1).image) || isPointFreeOperator(getToken(2).image) )})
+  LOOKAHEAD( HalfPointFreeExpr(), { (isPointFreeOperator(getToken(1).image) || isPointFreeOperator(getToken(2).image) )})
     ret = HalfPointFreeExpr()
   |
   ret = UnaryExpressionNotPlusMinus()
   )
 
-  { return isDrl ? asDrlNode(ret) : ret; }
+  { return ret; }
 }
 
 
@@ -1490,7 +1475,6 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
 	boolean hasArgs = false;
 	SimpleName name;
 	Type type;
-	boolean isDrl = false;
 	NodeList<AnnotationExpr> annotations = new NodeList<AnnotationExpr>();
 }
 {
@@ -1515,7 +1499,7 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
 	  "["ret = Expression() "]" { ret = new ArrayAccessExpr(range(scope, token()), scope, ret); }
 // drlcontraintparser start
 	|
-	  "#" {isDrl=true;}
+	  "#"
 	  (
 	    name = SimpleName() { ret = new InlineCastExpr(range(scope, token()),
 	                                                   new ClassOrInterfaceType(range(scope, token()), null, name, null, annotations),
@@ -1524,7 +1508,7 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
 	    "(" type = Type(emptyList()) ")" { ret = new InlineCastExpr(range(scope, token()), type, scope); }
 	  )
 	|
-  	  "!." {isDrl=true;}
+  	  "!."
        (
         "this" { ret = new ThisExpr(range(scope.getTokenRange().get().getBegin(), token()), scope); }
       |
@@ -1542,7 +1526,7 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
         )
 // drlcontraintparser end
   )
-  { return isDrl ? asDrlNode(ret) : ret; }
+  { return ret; }
 }
 
 Expression Literal():
