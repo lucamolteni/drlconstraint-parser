@@ -37,13 +37,8 @@ import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
-import com.github.javaparser.ast.type.TypeParameter;
 
 import static com.github.javaparser.Problem.PROBLEM_BY_BEGIN_POSITION;
-import static org.drools.constraint.parser.Providers.PreProcessor;
-import static org.drools.constraint.parser.Providers.UTF8;
-import static org.drools.constraint.parser.Providers.provider;
-import static org.drools.constraint.parser.Providers.resourceProvider;
 import static com.github.javaparser.utils.Utils.assertNotNull;
 import static org.drools.constraint.parser.ParseStart.CLASS_OR_INTERFACE_TYPE;
 import static org.drools.constraint.parser.ParseStart.EXPLICIT_CONSTRUCTOR_INVOCATION_STMT;
@@ -51,7 +46,9 @@ import static org.drools.constraint.parser.ParseStart.EXPRESSION;
 import static org.drools.constraint.parser.ParseStart.NAME;
 import static org.drools.constraint.parser.ParseStart.SIMPLE_NAME;
 import static org.drools.constraint.parser.ParseStart.TYPE;
-import static org.drools.constraint.parser.ParseStart.TYPE_PARAMETER;
+import static org.drools.constraint.parser.Providers.UTF8;
+import static org.drools.constraint.parser.Providers.provider;
+import static org.drools.constraint.parser.Providers.resourceProvider;
 
 /**
  * Parse Java source code and creates Abstract Syntax Trees.
@@ -330,17 +327,6 @@ public final class DrlConstraintParser {
      */
     public static SimpleName parseSimpleName(String name) {
         return simplifiedParse(SIMPLE_NAME, provider(name));
-    }
-
-    /**
-     * Parses a type parameter and returns it as a TypeParameter
-     *
-     * @param typeParameter a parameter like "T extends Serializable"
-     * @return the AST for the type parameter
-     * @throws ParseProblemException if the source code has parser errors
-     */
-    public static TypeParameter parseTypeParameter(String typeParameter) {
-        return simplifiedParse(TYPE_PARAMETER, provider(typeParameter));
     }
 
 }

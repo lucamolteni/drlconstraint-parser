@@ -637,52 +637,6 @@ TOKEN :
 
 TOKEN: { <CTRL_Z: "\u001A" /** ctrl+z char **/> }
 
-/*
- * Declaration syntax follows.
- */
-
-/**
- * If the list inside the returned RangedList is null, there are no brackets.
- * If it is empty, there are brackets, but nothing is in them <>.
- * The normal case is that it contains TypeParameters, like <A, B, C>.
- */
-RangedList<TypeParameter> TypeParameters():
-{
-	RangedList<TypeParameter> ret = new RangedList<TypeParameter>(new NodeList<TypeParameter>());
-	TypeParameter tp;
-	NodeList<AnnotationExpr> annotations = emptyList();
-}
-{
-   "<" { ret.beginAt(token()); }
-   tp = TypeParameter(annotations) { ret.add(tp); annotations = null; }
-   ( ","
-   tp = TypeParameter(annotations) { ret.add(tp); annotations = null; } )*
-   ">" { ret.endAt(token()); }
-   { return ret; }
-}
-
-TypeParameter TypeParameter(NodeList<AnnotationExpr> annotations):
-{
-	SimpleName name;
-	NodeList<ClassOrInterfaceType> typeBound  = emptyList();
-	JavaToken begin;
-}
-{
-   name = SimpleName() { begin=token(); } [ typeBound = TypeBound() ]
-   { return new TypeParameter(range(begin, token()), name, typeBound, annotations); }
-}
-
-NodeList<ClassOrInterfaceType> TypeBound():
-{
-	NodeList<ClassOrInterfaceType> ret = emptyList();
-	ClassOrInterfaceType cit;
-}
-{
-   "extends" cit = AnnotatedClassOrInterfaceType() { ret.add(cit); }
-   ( "&"   cit = AnnotatedClassOrInterfaceType() { ret.add(cit); } )*
-   { return ret; }
-}
-
 ReferenceType AnnotatedReferenceType():
 {
 	NodeList<AnnotationExpr> annotations = emptyList();
@@ -1782,14 +1736,6 @@ SimpleName SimpleNameParseStart():
 { SimpleName ret; }
 { ret = SimpleName() <EOF> { return ret; } }
 
-TypeParameter TypeParameterParseStart():
-{
-	TypeParameter ret;
-}
-{
-   ret = TypeParameter(emptyList()) <EOF>
-   { return ret; }
-}
 
 /* Rule syntax follows */
 

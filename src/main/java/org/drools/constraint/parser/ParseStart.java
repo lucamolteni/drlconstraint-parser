@@ -29,7 +29,6 @@ import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
-import com.github.javaparser.ast.type.TypeParameter;
 
 /**
  * The start production for JavaParser.
@@ -45,7 +44,6 @@ public interface ParseStart<R> {
     ParseStart<Expression> EXPRESSION = GeneratedDrlConstraintParser::ExpressionParseStart;
     ParseStart<ClassOrInterfaceType> CLASS_OR_INTERFACE_TYPE = GeneratedDrlConstraintParser::ClassOrInterfaceTypeParseStart;
     ParseStart<Type> TYPE = GeneratedDrlConstraintParser::ResultTypeParseStart;
-    ParseStart<TypeParameter> TYPE_PARAMETER = GeneratedDrlConstraintParser::TypeParameterParseStart;
     ParseStart<ExplicitConstructorInvocationStmt> EXPLICIT_CONSTRUCTOR_INVOCATION_STMT = GeneratedDrlConstraintParser::ExplicitConstructorInvocationParseStart;
     ParseStart<Name> NAME = GeneratedDrlConstraintParser::NameParseStart;
     ParseStart<SimpleName> SIMPLE_NAME = GeneratedDrlConstraintParser::SimpleNameParseStart;
