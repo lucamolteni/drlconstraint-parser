@@ -27,6 +27,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
@@ -174,5 +175,13 @@ public final class DrlNameExpr extends Expression implements NodeWithSimpleName<
     @Generated("com.github.javaparser.generator.core.node.PropertyGenerator")
     public int getBackReferencesCount() {
         return backReferencesCount;
+    }
+
+    public static DrlNameExpr fromNameExpr(NameExpr nameExpr) {
+        return new DrlNameExpr(nameExpr.toString());
+    }
+
+    public NameExpr safeToNameExpr() {
+        return new NameExpr(getName());
     }
 }
