@@ -1377,6 +1377,8 @@ Expression PrimaryPrefix():
             // This could still be a lambda expression, but this is handled after matching -> elsewhere
             ret = Expression() ")" { ret = new EnclosedExpr(range(begin, token()), ret); }
         )
+    |
+	  ret = AllocationExpression(null)
 	|
 	  LOOKAHEAD( ResultType() "." "class" )
 	  type = ResultType(emptyList())  "." "class" { ret = new ClassExpr(range(type, token()), type); }
@@ -1436,7 +1438,9 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
   	"."
   	(
 		"this" { ret = new ThisExpr(range(scope, token()), scope); }
-	  |
+      |
+        ret = AllocationExpression(scope)
+      |
 	  	LOOKAHEAD( [ TypeArguments() ] Identifier() )
 	  	[ typeArgs = TypeArguments() ]
 	  	name = SimpleName()
@@ -1465,6 +1469,8 @@ Expression PrimarySuffixWithoutSuper(Expression scope):
   	  "!."
        (
         "this" { ret = new ThisExpr(range(scope.getTokenRange().get().getBegin(), token()), scope); }
+      |
+        ret = AllocationExpression(scope)
       |
         LOOKAHEAD( [ TypeArguments() ] Identifier() )
         [ typeArgs = TypeArguments() ]
@@ -1562,6 +1568,30 @@ NodeList<Expression> ArgumentList():
   expr = Expression() { ret.add(expr); } ( "," expr = Expression() { ret.add(expr); } )*
   { return ret; }
 }
+
+Expression AllocationExpression(Expression scope):
+{
+	Expression ret;
+	Type type;
+	RangedList<Type> typeArgs = new RangedList<Type>(null);
+	NodeList<BodyDeclaration<?>> anonymousBody = null;
+	NodeList<Expression> args;
+	JavaToken begin = INVALID;
+}
+{
+    "new" { if(scope==null) {begin=token();} else {begin = orIfInvalid(begin, scope);} }
+
+    (
+        [ typeArgs = TypeArguments() ]
+        type = AnnotatedClassOrInterfaceType()
+        (
+            args = Arguments()
+            { ret = new ObjectCreationExpr(range(begin, token()), scope, (ClassOrInterfaceType) type, typeArgs.list, args, anonymousBody); }
+        )
+    )
+    { return ret; }
+}
+
 
 /*
  * Statement syntax follows.

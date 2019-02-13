@@ -22,30 +22,28 @@ import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 import com.github.javaparser.ParseProblemException;
-import org.drools.constraint.parser.ParseStart;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import org.drools.constraint.parser.printer.PrintUtil;
-import org.drools.constraint.parser.DrlxParser;
-import org.drools.constraint.parser.ast.expr.OOPathChunk;
-import org.drools.constraint.parser.ast.expr.OOPathExpr;
-import org.drools.constraint.parser.ast.expr.CommaSeparatedMethodCallExpr;
-import org.drools.constraint.parser.ast.expr.DrlxExpression;
-import org.drools.constraint.parser.ast.expr.HalfBinaryExpr;
-import org.drools.constraint.parser.ast.expr.HalfPointFreeExpr;
-import org.drools.constraint.parser.ast.expr.PointFreeExpr;
-import org.drools.constraint.parser.ast.expr.TemporalLiteralChunkExpr;
-import org.drools.constraint.parser.ast.expr.TemporalLiteralExpr;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.BinaryExpr.Operator;
-import org.drools.constraint.parser.ast.expr.DrlNameExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import org.drools.constraint.parser.ast.expr.CommaSeparatedMethodCallExpr;
+import org.drools.constraint.parser.ast.expr.DrlNameExpr;
+import org.drools.constraint.parser.ast.expr.DrlxExpression;
+import org.drools.constraint.parser.ast.expr.HalfBinaryExpr;
+import org.drools.constraint.parser.ast.expr.HalfPointFreeExpr;
+import org.drools.constraint.parser.ast.expr.OOPathChunk;
+import org.drools.constraint.parser.ast.expr.OOPathExpr;
+import org.drools.constraint.parser.ast.expr.PointFreeExpr;
+import org.drools.constraint.parser.ast.expr.TemporalLiteralChunkExpr;
+import org.drools.constraint.parser.ast.expr.TemporalLiteralExpr;
+import org.drools.constraint.parser.printer.PrintUtil;
 import org.junit.Test;
 
-import static org.drools.constraint.parser.printer.PrintUtil.printConstraint;
 import static org.drools.constraint.parser.DrlxParser.parseExpression;
+import static org.drools.constraint.parser.printer.PrintUtil.printConstraint;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
@@ -479,6 +477,14 @@ public class DrlxParserTest {
 
         Expression expression = parseExpression(parser, expr).getExpr();
         assertEquals("setAge(1), setLikes(\"bread\");", printConstraint(expression));
+    }
+
+    @Test
+    public void testNewExpression() {
+        String expr = "money == new BigInteger(\"3\")";
+
+        Expression expression = parseExpression(parser, expr).getExpr();
+        assertEquals(expr, printConstraint(expression));
     }
 
 
