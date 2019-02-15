@@ -487,6 +487,14 @@ public class DrlxParserTest {
         assertEquals(expr, printConstraint(expression));
     }
 
+    @Test
+    public void testArrayCreation() {
+        String expr = "new Object[]{\"getMessageId\", ($s != null ? $s : \"42103\")}";
+
+        Expression expression = parseExpression(parser, expr).getExpr();
+        assertEquals(expr, printConstraint(expression));
+    }
+
 
     private void testMvelSquareOperator(String wholeExpression, String operator, String left, String right, boolean isNegated) {
         String expr = wholeExpression;
