@@ -489,7 +489,7 @@ public class DrlxParserTest {
 
     @Test
     public void testArrayCreation() {
-        String expr = "new Object[]{\"getMessageId\", ($s != null ? $s : \"42103\")}";
+        String expr = "new Object[] { \"getMessageId\", ($s != null ? $s : \"42103\") }";
 
         Expression expression = parseExpression(parser, expr).getExpr();
         assertEquals(expr, printConstraint(expression));

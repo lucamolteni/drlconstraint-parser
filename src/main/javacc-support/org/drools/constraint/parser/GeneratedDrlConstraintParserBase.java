@@ -210,6 +210,30 @@ abstract class GeneratedDrlConstraintParserBase {
         return list;
     }
 
+
+    /**
+     * Throws together an ArrayCreationExpr from a lot of pieces
+     */
+    ArrayCreationExpr juggleArrayCreation(TokenRange range, List<TokenRange> levelRanges, Type type, NodeList<Expression> dimensions, List<NodeList<AnnotationExpr>> arrayAnnotations, ArrayInitializerExpr arrayInitializerExpr) {
+        NodeList<ArrayCreationLevel> levels = new NodeList<>();
+
+        for (int i = 0; i < arrayAnnotations.size(); i++) {
+            levels.add(new ArrayCreationLevel(levelRanges.get(i), dimensions.get(i), arrayAnnotations.get(i)));
+        }
+        return new ArrayCreationExpr(range, type, levels, arrayInitializerExpr);
+    }
+
+    /**
+     * Throws together a Type, taking care of all the array brackets
+     */
+    Type juggleArrayType(Type partialType, List<ArrayType.ArrayBracketPair> additionalBrackets) {
+        Pair<Type, List<ArrayType.ArrayBracketPair>> partialParts = unwrapArrayTypes(partialType);
+        Type elementType = partialParts.a;
+        List<ArrayType.ArrayBracketPair> leftMostBrackets = partialParts.b;
+        return wrapInArrayTypes(elementType, leftMostBrackets, additionalBrackets).clone();
+    }
+
+
     /**
      * This is the code from ParseException.initialise, modified to be more horizontal.
      */

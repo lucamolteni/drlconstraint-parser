@@ -637,6 +637,30 @@ TOKEN :
 
 TOKEN: { <CTRL_Z: "\u001A" /** ctrl+z char **/> }
 
+Expression VariableInitializer():
+{
+	Expression ret;
+}
+{
+  (
+	  ret = ArrayInitializer()
+	|
+	  ret = Expression()
+  )
+  { return ret;}
+}
+
+ArrayInitializerExpr ArrayInitializer():
+{
+	NodeList<Expression> values = emptyList();
+	Expression val;
+	JavaToken begin;
+}
+{
+  "{" {begin=token();} [ val = VariableInitializer() { values = add(values, val); } ( LOOKAHEAD(2) "," val = VariableInitializer() { values = add(values, val); } )* ] [ "," ] "}"
+  { return new ArrayInitializerExpr(range(begin, token()), values); }
+}
+
 ReferenceType AnnotatedReferenceType():
 {
 	NodeList<AnnotationExpr> annotations = emptyList();
@@ -1577,19 +1601,47 @@ Expression AllocationExpression(Expression scope):
 	NodeList<BodyDeclaration<?>> anonymousBody = null;
 	NodeList<Expression> args;
 	JavaToken begin = INVALID;
+    NodeList<AnnotationExpr> annotations = new NodeList<AnnotationExpr>();
 }
 {
     "new" { if(scope==null) {begin=token();} else {begin = orIfInvalid(begin, scope);} }
 
     (
+        type = PrimitiveType(annotations)
+        ret = ArrayCreation(begin, type)
+     |
         [ typeArgs = TypeArguments() ]
         type = AnnotatedClassOrInterfaceType()
         (
+            ret = ArrayCreation(begin, type)
+        |
             args = Arguments()
             { ret = new ObjectCreationExpr(range(begin, token()), scope, (ClassOrInterfaceType) type, typeArgs.list, args, anonymousBody); }
         )
     )
     { return ret; }
+}
+
+ArrayCreationExpr ArrayCreation(JavaToken begin, Type type):
+{
+	Expression expr = null;
+	ArrayInitializerExpr arrayInitializerExpr = null;
+	NodeList<Expression> inits = emptyList();
+	List<NodeList<AnnotationExpr>> accum = new ArrayList<NodeList<AnnotationExpr>>();
+	NodeList<AnnotationExpr> annotations = new NodeList<AnnotationExpr>();
+	JavaToken arrayCreationLevelStart = INVALID;
+	List<TokenRange> levelRanges = new ArrayList<TokenRange>();
+}
+{
+    ( LOOKAHEAD(2)
+        "[" { arrayCreationLevelStart = annotations.isEmpty() ? token() : orIfInvalid(arrayCreationLevelStart, annotations.get(0)); }
+        (expr = Expression())? { accum = add(accum, annotations); inits = add(inits, expr); annotations=null; expr=null; }
+        "]" { levelRanges.add(range(arrayCreationLevelStart, token())); }
+    )+
+    (arrayInitializerExpr = ArrayInitializer())?
+    {
+        return juggleArrayCreation(range(begin, token()), levelRanges, type, inits, accum, arrayInitializerExpr);
+    }
 }
 
 
