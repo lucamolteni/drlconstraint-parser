@@ -496,6 +496,15 @@ public class DrlxParserTest {
     }
 
 
+@Test
+    public void testArrayCreation2() {
+    String expr = "functions.arrayContainsInstanceWithParameters((Object[]) $f.getPersons())";
+
+        Expression expression = parseExpression(parser, expr).getExpr();
+        assertEquals(expr, printConstraint(expression));
+    }
+
+
     private void testMvelSquareOperator(String wholeExpression, String operator, String left, String right, boolean isNegated) {
         String expr = wholeExpression;
         Expression expression = parseExpression(parser, expr ).getExpr();

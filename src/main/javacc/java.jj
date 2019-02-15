@@ -757,9 +757,9 @@ ReferenceType ReferenceType(NodeList<AnnotationExpr> annotations):
 }
 {
   (
-   type = PrimitiveType(annotations)
+   type = PrimitiveType(annotations) ( arrayBracketPair = ArrayBracketPair(Origin.TYPE) { arrayBracketPairs=add(arrayBracketPairs, arrayBracketPair); } )+
   |
-   type = ClassOrInterfaceType(annotations)
+   type = ClassOrInterfaceType(annotations)  ( arrayBracketPair = ArrayBracketPair(Origin.TYPE) { arrayBracketPairs=add(arrayBracketPairs, arrayBracketPair); } )*
   )
   { return (ReferenceType)wrapInArrayTypes(type, arrayBracketPairs); }
 }
