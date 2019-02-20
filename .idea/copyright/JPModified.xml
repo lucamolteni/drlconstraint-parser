@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="Copyright (C) 2007-2010 Júlio Vilmar Gesser.&#10;Copyright (C) 2011, 2013-2016 The JavaParser Team.&#10;Copyright 2019 Red Hat, Inc. and/or its affiliates.&#10;&#10;This file is part of JavaParser.&#10;&#10;JavaParser can be used either under the terms of&#10;a) the GNU Lesser General Public License as published by&#10; the Free Software Foundation, either version 3 of the License, or&#10; (at your option) any later version.&#10;b) the terms of the Apache License&#10;&#10;You should have received a copy of both licenses in LICENCE.LGPL and&#10;LICENCE.APACHE. Please refer to those files for details.&#10;&#10;JavaParser is distributed in the hope that it will be useful,&#10;but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#10;GNU Lesser General Public License for more details.&#10;&#10;Modified by Red Hat, Inc." />
+    <option name="myName" value="JPModified" />
+  </copyright>
+</component>
